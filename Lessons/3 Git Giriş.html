@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data's Book on Git</title>
+
+    <link rel="icon" type="image/x-icon" href="../Sources/favicon.png">
+
+    <script src="../Sources/JS/setBackgroundMedia.js"></script>
+
+    <link rel="stylesheet" href="../Sources/JS/hljs/vs2015.css">
+    <script src="../Sources/JS/hljs/highlight.min.js"></script>
+    <script>
+        window.onload = function() {
+            hljs.highlightAll();
+        };
+    </script>
+
+    <link rel="stylesheet" href="../Sources/CSS/main.css">
+</head>
+<body>
+    <h1>Giriş</h1>
+
+    <div style="height: 100px;"></div>
+    
+    <div id="mainDiv">
+        <h2>Versiyon Kontrol Sistemi Nedir?</h2>
+        <pre id="preh2">Versiyon kontrol sistemi, bir sistemdeki verileri, dosyaları, evrakları veya projeleri sürüm sistemi ile yönetmeye yönelik bir sistemdir.</pre>
+
+        <pre id="preh2">Versiyon kontrol sistemi kısaca VCS, bir veriyi ne zaman eklendiğinin tutun bir hatanın hangi sürümde var olduğunu ve hangi sürümde düzeltiğine kadar meta verilerini görebildiğimiz ve aynı zamanda yönetebildiğimiz araçtır. Eğer VCS olmasaydı dosyalar karışır, hataların tarihlerini görülemez ve iyileştirilmeler yapılamazdı.</pre>
+
+        <pre id="preh2">Genelde kullanım alanları ise Github veya Gitlab gibi Git LFS[Long File Storge(Uzun Dosya Depolama), Git sistemini dosya sistemidir]'e sahip bütün sunucularda kullanılır. VCS'nin en popüler aracı ise Git'dir. Git, bu tarz süreçleri son derece kolay ve anlışır hale getirmiştir. Ayrıca VCS yapmak kalmaz, aynı zamanda Commit gibi "Şu sürümde bu yapıldı" gibi notlar bırakabilir hale getirmiştir.</pre>
+
+        <h3>VCS Olmadan Çalışmak</h3>
+        <pre id="preh3">Eğer VCS olmasaydı, büyük projeler ve büyük ekiplerin yapmış olduğu devasa uygulamalar hiç bir zaman var olmaz veya günümüzde yapması imkansıza yakın olurdu. Çünkü VCS herkese ortak bir veri sunar. Sürüm bilgisi. Eğer bu bilgi verilmesse dosya karmaşaları, önemli dosyaların hiçe sayılıp üzerine yazılması ve hatalar gibi bir dolu tatsız olayların yaşanmasına yol açardı.</pre>
+
+        <pre id="preh3">Örnek olarak da Linux çekirdeği örneği verilebilir. Linux, aynı zamanda Git'in yaratıcısı olan Linus Torvalds tarafıdan bir eğlence projesi olarak çıkmış olsada günümüzde milyarlaca bilgisayar, sunucu ve mobil cihazlar gibi akıl almaz bir araca dönüştürmüştür. Ama Linus Torvalds bu önemi tek başına proeje kazandırmadı. Bu sayfanın yazılma tarihi itibariyle 18 binden fazla Contributors yani katkıda bulunanlar vardır. Bu insanlar projede değişiklik yaptıkça sürümler güncellenir ve herkese bildirilir. Ne zaman atıldığı ve not olarak kullanılan Commit'de yazılır. İşte bu 18 binden fazla insan Linux çekirdeğini buzlabınızdaki ısı kontrol sistemlerinden telefonuzdaki Android cihazına kadar yer yere yayılmaya başarmışlardır.</pre>
+
+        <h3>VCS Türleri</h3>
+        <pre id="preh3">VCS türlerini tablo halinde bakalım;</pre>
+
+        <table id="tableh2" border="1">
+            <thead>
+                <tr>
+                    <th>İsmi</th>
+                    <th>Tanımı</th>
+                    <th>Avantajı</th>
+                    <th>Dezavantajı</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yerel Versiyon Kontrol Sistemi</td>
+                    <td>Tek bir bilgisayarda versiyon kontrol sistemidir. Tek kullanıcılı ve geliştirici destekler. Bireysel projelerde sıklıkla kullanılır.</td>
+                    <td>İnternet veya sunucu ihtiyacı yoktur.</td>
+                    <td>Ekipli projeler için elverişsizdir.</td>
+                </tr>
+                <tr>
+                    <td>Merkezi Versiyon Kontrol Sistemi</td>
+                    <td>Proje bir ana sunucuda depolanır ve geliştiriciler o sunucuya bağlanarak dosyaları geliştirir ve kayıt eder.</td>
+                    <td>Ekipli projelerde ortak dosya paylaşımı sağlar.</td>
+                    <td>Ana sunucu çökerse tüm projenin geliştirme sürecide durur.</td>
+                </tr>
+                <tr>
+                    <td>Dağıtık Sistemli Versiyon Kontrol Sistemi</td>
+                    <td>Git'in kullandığı sistemdir. Geliştiriciler ana projeyi sunucudan çeker, kendi makinelerindeki kopya üzerinde işlemler gerçekleştirirler. Ardından işlemler bittikten sonra geri sunucuya gönderirler. Bu sistem iki aşamalıdır. İlk önce Commit yani not bırakılır, ardından Push ile sunucuya iletilir.</td>
+                    <td>Ana sunucu çökse bile geliştiricilerde birer kopaysı olduğu için geliştirme süreci baltalanmaz.s</td>
+                    <td>Farkında olmadan bir dosya üzerinde birden fazla geliştirici aynı anda geliştirme yaparsa veri kaybı veya bozulması gözlemlenebilir.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Git Nedir?</h2>
+        <pre id="preh2">Git, VCS için en çok tercih edilen ve kullan bir programdır. Çoğunlukla büyük projelerde veya ekipli projelerde sıklıkla kullanılır. Hatta bu dökümantasyonun Repo ise <a href="https://github.com/DATA35DELETE/Data-s-Book-on-Git">Github'da</a> bulunmaktadır.</pre>
+
+        <pre id="preh2">Git, yedi Nisan 2005'te Linus Torvalds tarafından Linux çekirdeği projesi için versiyon yönetim sistemi arayışla başlamıştır. O zamanlar BitKeeper ile çalışmış fakat tersine mühendislikle beraber kendi versiyon yönetim sistemi Git'i geliştirmiştir.</pre>
+
+        <h3>Diğer VCS Programları</h3>
+        <pre id="preh3">Tek VCS programı Git değildir. Diğerlerini tablo şeklinde karşılaştıralım.</pre>
+
+        <table id="tableh2" border="1">
+            <thead>
+                <tr>
+                    <th>İsim</th>
+                    <th>Tanım</th>
+                    <th>Git ile Karşılaştırma</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apache Subversion</td>
+                    <td>Subversion, 2000 yılında CollabNet tarafından versiyon kontrol sistemi programı olarak ortaya çıkmıştır.</td>
+                    <td>Git'in aksine dağıtık sistemli versiyon kontrol sistemi yerine merkezi versiyon kontrol sistemi kullanmaktadır.</td>
+                </tr>
+                <tr>
+                    <td>Mercurial</td>
+                    <td>Mercurial, on dokuz Nisan 2005'te çıkışı yapılan bir versiyon kontrol sistemidir. Git ile paralel geliştirilmiş ve neredeyse aynı özelliklere sahiptir. Simgesi "Hg" olup kimyadaki "Merkür" elementinden gelmektedir.</td>
+                    <td>Her ne kadar Git ile paralel geliştirimiş olsada, Git her konudu Mercurial'dan çok daha gelişmiş ve oturmuş bir sistemdir. Mercurial'da dağıtık sistemli versiyon yönetim sistemli modelini kullanılır.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Git Kurulumu</h2>
+
+        <h3>Linux</h3>
+        <pre id="codeh3">Linux kurulumu için şu komutu çalıştıralım;
+            
+<code class="language-bash">sudo apt install git</code></pre>
+        
+        <h3>MacOS</h3>
+        <pre id="codeh3">MacOS kurulumu için şu komutu çalıştıralım;
+            
+<code class="language-bash">brew install git</code></pre>
+
+        <h3>Windows</h3>
+        <pre id="preh3">Windows'da Git'i kurmak için Git'in ana sayfasına <a href="https://git-scm.com/install/windows">gidelim</a>.</pre>
+
+        <pre id="preh3">Daha sonra bize uygun olan versiyonunu indirelim.</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/1.png" alt="3.1" width="80%">
+        </div>
+
+        <pre id="preh3">İnen uygulamayı çalıştıralım.</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/2.png" alt="3.2" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/3.png" alt="3.3" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/4.png" alt="3.4" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/5.png" alt="3.5" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/6.png" alt="3.6" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/7.png" alt="3.7" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/8.png" alt="3.8" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/9.png" alt="3.9" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/10.png" alt="3.10" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/11.png" alt="3.11" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/12.png" alt="3.12" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/13.png" alt="3.13" width="80%">
+        </div>
+
+        <pre id="pre3">Install kısmı bittikten sonra programın kapanmasını bekliyelim. Eğer uzun bir süre kapanmaz veya donarsa görev yöneticisinden Git indiricisini bulup "Görevi Sonlandır" diyelim.</pre>
+
+        <h3>Kontrol</h3>
+        <pre id="preh3">Yüklenip yüklenmediğini anlıyabilmek adında <code class="language-bash">git --version</code> diyelim ve çıktıyı gözlemleyelim.</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/14.png" alt="3.14" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/3 Git Giriş.html/15.png" alt="3.15" width="80%">
+        </div>
+
+        <h2>Kaynakça</h2>
+        <ul>
+            <li><a href="https://tr.wikipedia.org/wiki/Sürüm_kontrol_sistemi">https://tr.wikipedia.org/wiki/Sürüm_kontrol_sistemi</a></li>
+            <li><a href="https://github.com/torvalds/linux">https://github.com/torvalds/linux</a></li>
+            <li><a href="https://www.geeksforgeeks.org/git/version-control-systems/">https://www.geeksforgeeks.org/git/version-control-systems/</a></li>
+            <li><a href="https://tr.wikipedia.org/wiki/Git_(yazılım)">https://tr.wikipedia.org/wiki/Git_(yazılım)</a></li>
+            <li><a href="https://tr.wikipedia.org/wiki/Apache_Subversion">https://tr.wikipedia.org/wiki/Apache_Subversion</a></li>
+            <li><a href="https://medium.com/@latestsoftwaredevelopers/svn-ve-git-arasındaki-farklar-c8239617acb">https://medium.com/@latestsoftwaredevelopers/svn-ve-git-arasındaki-farklar-c8239617acb</a></li>
+            <li><a href="https://tr.wikipedia.org/wiki/Mercurial">https://tr.wikipedia.org/wiki/Mercurial</a></li>
+            <li><a href="https://www.geeksforgeeks.org/git/difference-between-mercurial-and-git/">https://www.geeksforgeeks.org/git/difference-between-mercurial-and-git/</a></li>
+            <li><a href="https://git-scm.com/install/windows">https://git-scm.com/install/windows</a></li>
+        </ul>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <footer style="position: fixed; left: 0; bottom: 0; width: 100%; background: transparent; text-align: center; padding: 10px 0; z-index: 100;">
+        <div>
+            <a href="./2 Git Önsöz.html" style="margin-right: 20px; cursor:pointer;">
+                &larr; Önceki
+            </a>
+            <a href="" style="cursor:pointer;">
+                Sonraki &rarr;
+            </a>
+        </div>
+        <div>
+            <p>&copy; 2026 Data's Book</p>
+        </div>
+
+        <div style="position: absolute; right: 20px; bottom: 20px;">
+            <a href="./1 Git İçindekiler.html" style="text-decoration: none;">
+                İçindekiler
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
+
+<!-- Muhammet Enes nam-ı diğer Data Delete tarafından sevgi ile yapıldı <3 -->
