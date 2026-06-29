@@ -185,6 +185,130 @@
             <img src="../Bibliography/3 Git Giriş.html/15.png" alt="3.15" width="80%">
         </div>
 
+        <h2>İlk Yapılandırma</h2>
+        <pre id="preh2">Git kuruldu fakat yapılandırma yapılmazsa bazı kısımlarda bizi engelliyebilir. Bu sebeble ilk kurulduğunda yapmamız gerek yapılandırma bilgilerini Git'e girelim.</pre>
+
+        <h3>Kullanıcı Adı</h3>
+        <pre id="preh3">Kullanıcı adı, bir repoya bir Push atıcağımız zaman gözükecek olan isimdir. Tabikide Git'de anonim kalamayız çünkü isimsiz biri gelip sizin reponuzu silebilir! Bu sebeble kullanıcı adı yapılandırması yapmadan önce Github üzerinden bir hesap oluşturmanız gereklidir. Hesap oluşturduktan sonra bu yapılandırmayı yapınız.</pre>
+
+        <pre id="codeh3"><code class="language-bash">git config --global user.name "&lt;Github'da açtığınız hesabın ismi>"</code>
+        
+Artık isminiz gözükmektedir.</pre>
+
+        <h3>E-posta</h3>
+        <pre id="preh3">Tabiki kullanıcı adı yetmez, e-posta adreside lazım. Ancak E-posta adresiniz yetkili olduğunuz repolarda değişiklik yapma hakkına sahip olma veya verme yetkisine verilmesini sağlar. Bu sebeble E-posta önemlidir.</pre>
+
+        <pre id="codeh3"><code class="language-bash">git config --global user.email "&lt;Github'da açtığınız hesabın maili></code></pre>
+
+        <h3>Editör</h3>
+        <pre id="preh3">Pek kullanmasak da Git içerisinde kullanıcağımız editörü Git'e belirtmemiz gerekir. Bunun için ben Visual Studio Code seçiceğim, fakat siz dilediğiniz IDE'i kullanabilirsiniz.</pre>
+
+        <pre id="codeh3">git config --global core.editor code # Eğer Visual Studio Code değil ise sistem ortam değişkenlerindeki IDE'niniz yolunu tutan değişkenini ismini kullanmanız gerekir</pre>
+
+        <h3>Branch</h3>
+        <pre id="preh3">Branch, aynı repodaki farklı kısımları belirten bir kavramdır. Ana Branch denilen ve tüm ana kodların bulunan kısımın ismi <code>master</code> olarak adlandırılırdı. Fakat zaman içinde bu alışkanlık değişti ve <code>main</code> ismini aldı, Git'i ilk kurduğumuzda bu ayar <code>master</code> olarak ayarlıdır. Bizler <code>main</code> olarak ayarlamalıyız ki Branch değiştirmekle uğraşmayalım. Bu yapılandırmaya "Varsayılan Branch" denir.</pre>
+
+        <pre id="codeh3"><code class="language-bash">git config --global init.defaultBranch main</code></pre>
+
+        <h3>Yapılandırmayı Listeleme</h3>
+        <pre id="pre3">Yapılan değişikliklere bakmak istersek <code class="language-bash">git config --list</code> şeklinde gözlemleyebiliriz.</pre>
+
+        <h3>Yapılandırma Seviyeleri</h3>
+        <pre id="preh3">Git'de yapılandırma seviyeli tablo şeklinde aşşağıda verilmiştir.</pre>
+
+        <table id="tableh3" border="1">
+            <thead>
+                <th>İsmi</th>
+                <th>Açıklaması</th>
+                <th>Yazılışı</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Local</td>
+                    <td>Repo klasörü içerisine özel olarak tanımlanabilen yapılandırma seviyesidir. Yapılan değişiklikler sadece yapılan Repo klasörünü etkiler.</td>
+                    <td>--local</td>
+                </tr>
+                <tr>
+                    <td>Global</td>
+                    <td>Genel tüm repolardaki yapılandırma düzeyidir. Global'daki yapılandırma, repo klasöründeki Local yapılandırma dosyasının kaynağıdır.</td>
+                    <td>--global</td>
+                </tr>
+                <tr>
+                    <td>System</td>
+                    <td>Tüm repoları etkliyen bir yapılandırma seviyesidir. Yapılan değişiklikler tüm repoları etkiler.</td>
+                    <td>--system</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Git'in Çalışma Mantığı</h2>
+        <pre id="preh2">Snapshots tabanlı yani her kaydetmede değişmiş dosyaları kayıt eden bir yapısı vardır. Değiştirilmemiş dosyalar kopyalanmaz, mevcut Snapshots'a yönlendirilir. Bu sayede Git'e hız ve peformans kazandırır.</pre>
+
+        <pre id="preh2">Başka bir mimari olan Delta ise anlık verileri almak yerine her bir dosyada "Değişiklik var mı?" diye kontrol eder. Delta, alan açısından verimlidir.</pre>
+
+        <pre id="preh2">Linus Torvalds bu durumda Git için Snapshots mimarisini tercih etmiştir.</pre>
+
+        <h3>Üç Bölge</h3>
+        <pre id="preh3">Git, bir repoda bizlere üç adet kısım sağlar. Çalışma, Sahneleme ve Depo dizinlerini sağlar.</pre>
+
+        <pre id="preh3">Çalışma dizini, repo dosyaların olduğu kısımdır. Bu kısım Repo klasörüdür.</pre>
+
+        <pre id="pre3">Sahneleme dizini, bir sonraki değişikliklerin kayıt edileceği kısımdır. Bu kısıma ".git" klasöründeki bir bölümdür.</pre>
+
+        <pre id="preh3">Depo dizini, Git'in değişiklik geçimişi depoladığı dizine denir. Bu kısım ".git" klasörünün tamamıdır.</pre>
+
+        <h3>Dosya Durumları</h3>
+        <pre id="preh3">Repo klasöründe her bir dosyanın ve altklasörün bir dosya durumu vardır. Bu durumlar dosya ve klasör üzerinde ne gibi işlemler yapıldığına dair bilgiler sağlamaktadır. Tablo şeklinde dosya durumları verilmiştir.</pre>
+
+        <table id="tableh3" border="1">
+            <thead>
+                <tr>
+                    <th>İsmi</th>
+                    <th>Açıklaması</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Modified</td>
+                    <td>Bu dosya üzerinde değişiklik yapıldı fakat henüz Commit atılmadı</td>
+                </tr>
+                <tr>
+                    <td>Staged</td>
+                    <td>Değişiklikler bir sonraki Snapshots'a hazır durumda.</td>
+                </tr>
+                <tr>
+                    <td>Committed</td>
+                    <td>Atılan Commit yerel repoda başarılı bir şekilde Snapshots'landı.</td>
+                </tr>
+                <tr>
+                    <td>Untracked</td>
+                    <td>Git'in kapsamı dışındaki fakat repo klasöründe bulunan dosyaları ve klasörleri temsil eder.</td>
+                </tr>
+                <tr>
+                    <td>Tracked</td>
+                    <td>Git'in kapsamı altında olan tüm dosyaları ve klasörleri temsil eder.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Yardım Alma</h2>
+        <pre id="preh2">Pek tabi bizler birer robot olmadığımız için bilgileri her zaman hatırlayamayabiliriz. Öyle bir zaman gelir ki her gün çalıştırdığınız ve ezberlediğiniz komut olan <code>git commit</code> komutunu unutursunuz ve projeniz bir kaç gün geç kalır. İşte bu gibi durumları önlemek ve unuttuğunuz komutları tekrar hatırlamak için Git bizlere <code>help</code> parametresi sunar. Help, ya Git'i açıklar yada Git &lt;komut> yazarakta yazdığınız komutun ne anlama geldiğini ve kullanımı sunan bir bir sayfayı taracıda açar. Help komutu ile yardım alalım.</pre>
+
+        <pre id="codeh2"><code class="language-bash">git help # Git'i tanıtır
+
+git commit help # Commit komutunu tanıtır
+</code>
+
+Çıktıları ise;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/3 Git Giriş.html/16.png" alt="3.16" width="80%">
+        </div>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/3 Git Giriş.html/17.png" alt="3.17" width="80%">
+        </div>
+
         <h2>Kaynakça</h2>
         <ul>
             <li><a href="https://tr.wikipedia.org/wiki/Sürüm_kontrol_sistemi">https://tr.wikipedia.org/wiki/Sürüm_kontrol_sistemi</a></li>
@@ -196,6 +320,10 @@
             <li><a href="https://tr.wikipedia.org/wiki/Mercurial">https://tr.wikipedia.org/wiki/Mercurial</a></li>
             <li><a href="https://www.geeksforgeeks.org/git/difference-between-mercurial-and-git/">https://www.geeksforgeeks.org/git/difference-between-mercurial-and-git/</a></li>
             <li><a href="https://git-scm.com/install/windows">https://git-scm.com/install/windows</a></li>
+            <li><a href="https://git-scm.com/book/tr/v2/Git’i-Özelleştirmek-Git-Yapılandırması">https://git-scm.com/book/tr/v2/Git’i-Özelleştirmek-Git-Yapılandırması</a></li>
+            <li><a href="https://www.webcebir.com/435-git-yapilandirma-dersi.html">https://www.webcebir.com/435-git-yapilandirma-dersi.html</a></li>
+            <li><a href="https://www.geeksforgeeks.org/git/how-git-works-under-the-hood/">https://www.geeksforgeeks.org/git/how-git-works-under-the-hood/</a></li>
+            <li><a href="https://blog.git-init.com/snapshot-vs-delta-storage/">https://blog.git-init.com/snapshot-vs-delta-storage/</a></li>
         </ul>
     </div>
 
