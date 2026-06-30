@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data's Book on Git</title>
+
+    <link rel="icon" type="image/x-icon" href="../Sources/favicon.png">
+
+    <script src="../Sources/JS/setBackgroundMedia.js"></script>
+
+    <link rel="stylesheet" href="../Sources/JS/hljs/vs2015.css">
+    <script src="../Sources/JS/hljs/highlight.min.js"></script>
+    <script>
+        window.onload = function() {
+            hljs.highlightAll();
+        };
+    </script>
+
+    <link rel="stylesheet" href="../Sources/CSS/main.css">
+</head>
+<body>
+    <h1>Temel İş Akışları</h1>
+
+    <div style="height: 100px;"></div>
+    
+    <div id="mainDiv">
+        <h2>Repository(Repo) Nedir?</h2>
+        <pre id="preh2">Repo, Git klasörüne verilen isimdir. ".git" klasörünün bulunduğu klasörlerin hepsi birer repo olarak sayılmaktadır.</pre>
+
+        <h2>Git Init</h2>
+        <pre id="prej2">Init, Git'i başlatmamızı sağlayan bir komuttur. Repo'muzu açıcağımız kısımda, komut satırında <code>git init</code> diyoruz ve repomuz yerel olarak açılmış oluyor.</pre>
+
+        <pre id="preh2">Mevcut bir projeyi Git ile bir repo haline getirmek istiyorsanız, projenizin tüm klasörleri kapsadığı kısma gidin ve komut satırına <code>git init</code> komutunu girin. Artık projeniz Git ile bir repo haline gelmiş oldu...</pre>
+
+        <h2>Git Status</h2>
+        <pre id="preh2">Status, "Giriş" sayfasında bahsettiğimiz dosya durumları bilgilerini çıktı olarak görebilirsiniz.</pre>
+
+        <pre id="codeh2">Örnek olarak bu dökümantasyonun reposunda benim bu sayfayı yazdığım sırada dosya durumlarını konsol üzerinden gözlemliyelim.
+
+<code class="language-bash">git status</code>
+
+Çıktı ise;</pre>
+
+            <div id="divh2Img">
+                <img src="../Bibliography/4 Git Temel İş Akışları.html/1.png" alt="4.1" width="80%">
+            </div>
+
+            <pre id="codeh2">Gördüğünüz gibi istatislikler ile yaptığım işlemler ortada. Eğer daha kısa bir özet istersek;
+
+<code class="language-bash">git status -s</code>
+
+Çıktısı ise;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/2.png" alt="4.2" width="80%">
+        </div>
+
+        <pre id="preh2">Daha kısa bir özet karşımda...</pre>
+
+        <h2>Git Add</h2>
+        <pre id="preh2">Add, yapılan değişiklikleri Staged kısmına alma komutudur.</pre>
+
+        <pre id="preh2">Commit atmadan önce pek tabi biz Git'e "Şu dosyalar güncellendi" diye bir uyarı vermeliyiz ki Git hangi dosyayı Repo'ya atıcağını bilesin.</pre>
+
+        <pre id="codeh2">Komutu kullanabilmek için; 
+            
+<code>git add &lt;eklenecekDosya></code>
+
+Şeklinde kullanılır.</pre>
+
+        <h3>Tek Dosya ile Eklenme</h3>
+        <pre id="preh3">Tek dosya ile eklemek için "eklenecekDosya" kısmına tek bir dosya ismi yazılır ve dosya Staged olmuş olur.</pre>
+
+        <pre id="preh3">Testlerimizi gerçekleştirebilmek için bir repo açalım ve tüm testlerimizi bu kısımda gerçekleştirelim. İlk olarak bir klasör seçin ve <code>git init</code> komutunu yazıp çalıştıralım. Daha sonra içerisine bir merhabaGit.txt adlı bir dosya oluşturalım ve <code>git add</code> ile dosyamızı Staged yapalım.</pre>
+
+        <pre id="codeh3"><code class="language-bash">git init
+
+# Dosyayı oluşturalım
+
+git add merhabaGit.txt
+
+git status -s # Status ile de durumu kontrol edelim.</code>
+
+Çıktı ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/3.png" alt="4.3" width="80%">
+        </div>
+
+        <h3>Tüm Dosyaları ile Ekleme</h3>
+        <pre id="preh3">Eğer birden fazla dosyayı Add ile eklicek isek "eklenecekDosya" kısmına "." koyarız. Bunun anlamı bulunduğu dizinin bütün dosyalarını ekliceğini belirtir.</pre>
+
+        <pre id="codeh3">Örnek olarak o test repomuza; "a.txt", "b.txt", "c.txt" ve "d.txt" adlı dört adet dosya oluşturalım ve ekliyelim.
+        
+<code class="language-bash"># Dosyalar oluşturuldu
+
+git status -s # İlk durumu görelim
+
+git add .
+
+git status -s # Son durumu gözlemliyelim
+</code>
+
+Çıktısı ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/4.png" alt="4.4" width="80%">
+        </div>
+
+        <pre id="preh3">Gördüğünüz gibi tek bir komutla tüm dosyaları eklemiş olduk.</pre>
+
+        <h3>Belirli Uzantıları ile Eklemek</h3>
+        <pre id="preh3">Sadece belirli bir uzantıya sahip dosyaları eklicek isek "eklenecekDosya" kısmına "*.istenenDosyaUzantisi" şeklinde yazmamız gerekir.</pre>
+
+        <pre id="codeh3">Örnek olması açısından, "main.c" ve "funcs.c" adında iki dosya; "main.cpp" ve "headers.cpp" adlı iki tane dosya oluşturalım. Ardından sadece ".cpp" uzantılı dosyaların eklenceğine dair bir <code>add</code> komutu girelim.
+        
+<code class="language-bash"># Dosyaları oluşturalım
+
+git status -s
+
+git add *.cpp
+
+git status -s</code>
+
+Çıktısı ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/5.png" alt="4.5" width="80%">
+        </div>
+
+        <pre id="preh3">Böylelikle sadece belirli bir dosya uzantısını eklemiş olduk.</pre>
+
+        <h3>İnteraktif</h3>
+        <pre id="preh3">Git, bizlere Add komutunu kullanmamız için özel bir TUI[Text User Interface(Yazısal Kullanıcı Arayüzü)] şeklinde bir ekran tasarlamışlardır. Bu ekrana giriş yapmak için <code>git add -i</code> diyerek girebiliriz. Ardından yönlendirmeler ile değişiklikler yapılabilir.</pre>
+
+        <pre id="preh3">Git'in bize sunduğu nimetlerden yararlanmak için geri kalan o ".c" uzantılı dosyalarını da ekliyelim.
+
+<code class="language-bash">git add -i
+
+# İşlemler...
+
+git status -s</code>
+
+Çıktı ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/6.png" alt="4.6" width="80%">
+        </div>
+
+        <h2>Git Commit</h2>
+        <pre id="preh2">Commit, yapılan değişiklileri kayıt etmek ve not eklemek için kullanılan bir komuttur. <code>git commit -mod &lt;atılacakOnaCommitMesajı></code></pre>
+
+        <h3>Basit Commit</h3>
+        <pre id="preh3">Basit bir Commit atmak için "mod" yerine "m" ve "atılacakOnaCommitMesajı" kısma ise çift tırnaklar içerisinde yazıcağımız yazabiliriz.</pre>
+
+        <pre id="codeh3">Örnek olsun niyetiyle klasikleşmiş bir Commit mesajı olan "Inital Commit" yani "Başlangıç Commit'i" mesajını yazalım.
+
+<code class="language-bash">git status -s # Önceki durumu görelim
+
+git commit -m "Initial Commit"
+
+git status -s # Son durumu gözlemliyelim
+</code>
+
+Çıktı ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/7.png" alt="4.7" width="80%">
+        </div>
+
+        <pre id="preh3">Sondaki çıktı ise tüm dosyaların Commit'lendiğini ifade eder.</pre>
+
+        <h3>Editörlü Commit Atımı</h3>
+        <pre id="preh3">Editör ile Commit atmak istersek sadece <code>git commit</code> yazmamız yeterlidir. Bizim başta tanımladığımız editörde Commit dosyasın açar, ardından kaydet ve çıkış yap deriz ve Commit tamamlanmış olur.</pre>
+
+        <pre id="codeh3">Test etmek için "e.txt" isimli bir dosya oluşturalım ki editörlü Commit'i deniyebilelim.
+
+<code class="language-bash">touch e.txt # Bash betik dilinde touch dosya oluşturmak için kullanılır. Touch ile dosyamızı oluşturuyoruz
+
+git add e.txt
+
+git status -s # İlk durumu gözlemliyelim
+
+git commit # Gelen ekranda yazılacak olan Commit mesajı yazmak için, A tuşuna basalım. Bu bizi yazma modunu kullanmamızı olanak tanır. Ardından Commit mesajını yazalım. İşimiz bittiğinde ESC basalım ve gelen kısımda ":wq" yazalım ve işlem tamamdır
+
+git status -s # Son durumu gözlemleyelim
+</code>
+
+Çıktıları ise;</pre>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/8.png" alt="4.8" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/9.png" alt="4.9" width="80%">
+        </div>
+
+        <div id="divh3Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/11.png" alt="4.11" width="80%">
+        </div>
+
+        <h3>İyi Commit Mesajı Yazma Prensibleri</h3>
+        <pre id="preh3">İyi Commit yazmak, özellikle büyük projelerde yaptığınız değişiklikleri anlaşılması ve sürüm karmaşasını önliyerek hem anlaşılır repolar hemde sizlere bir prestij kazandırır. Gelin bakalım şu prensiblere;</pre>
+
+        <table id="tableh3" border="1">
+            <thead>
+                <tr>
+                    <th>İsmi</th>
+                    <th>Açıklama</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Her Zaman İngilizce</td>
+                    <td>Biliyorum... Ana dilinizde yazmak istiyorsunuz fakat Dünya'nın genel olarak konuştuğu dil İngilizcedir. Evet yerel repolarınızda Türkçe kesinlikle kullanabilirsiniz fakat herkese sunduğunuz bir reponuz varsa, İngilizce Commit atmak her zaman bir tık daha öteye taşır.</td>
+                </tr>
+                <tr>
+                    <td>Netlik</td>
+                    <td>Commit mesajınız her zaman açık ve net olmalıdır. Uzun uzun nedenler ve çözüm süreçleri yerine, "Şu hata şu çözüm ile giderildi" gibi bir mesaj daha etkili olucaktır. İlla hata olmasına gerek yok tabi, "Şu özellik eklendi" gibi net ve kesin cümlelerle Commit mesajları yazılmalıdır.</td>
+                </tr>
+                <tr>
+                    <td>Göve Kısmını Açıklayıcı İfadeler Kullanılmalı</td>
+                    <td>Commit mesajlarının üç ana kısımları vardır. Bunlardan birisi az önce netlik başlığında bahsettiğimiz feat kısmı ile ilgiliydi. Açıklama yapılması gereken kısımlar işte fix kısmıdır. Bu kısımda sorunun neden çıktığı, nelere yol açıtğı ve nasıl düzeltildiği gibi soruların cevaplancağı bir açıklama metni yazılmalıdır. Docs kısmına ise kaynakça eklenmelidir.</td>
+                </tr>
+                <tr>
+                    <td>Eki Olmayan Mesajlar</td>
+                    <td>Commit mesajı yazılırken bir diğer prensib ise emir kipi kullanımıdır. "Yapılmıştı" ifadesi yerine "Yapıldı" gibi kullanımlar daha çok tavsiye edilir.</td>
+                </tr>
+                <tr>
+                    <td>Issues ve Pulrequests ile Bağlantılı Mesaj Yazma</td>
+                    <td>İlerleyen sayfalarda göreciğiz, ama Issues'lere Pulrequests'lere bağlantılı şekilde Commit mesajı yazmak, Commit mesajı karmaşasını engeller.</td>
+                </tr>
+                <tr>
+                    <td>.gitignore Dosyası Kullanın</td>
+                    <td>İlerki sayfalarda daha detaylı işleceğiz. ".gitignore" bizler için aslında Git reposunda bulunan fakat sunucuya gitmesini istemediğimiz dosyaları veya klasörleri belirtmemizi sağlayan özel bir talimat listesidir. Genellikle kendi kendine oluşan veya derleme dosyayaları gibi gereksiz dosyalar ".gitignore" dosyasına yazılır.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre id="preh3">Bu prensiblere uyduğunuz sürece daha kaliteli Commit mesajları yazabilir hala gelebilirisiniz.</pre>
+
+        <h3>Formatlı Commit Mesajları</h3>
+        <pre id="preh3">Formatlı Commit mesajları, <a href="https://www.conventionalcommits.org/tr/v1.0.0/">Conventional Commits</a> adlı bir kurum tarafından tüm Commit mesajlarının bir düzeni olması için ortaya atılmış bir formatlamadır.</pre>
+
+        <pre id="preh3">Sıkça kullanılan bu formatlı Commit mesajlarındaki kullanılan kısımları tablo şeklinde inceleyelim.</pre>
+
+        <table id="tableh3" border="1">
+            <thead>
+                <tr>
+                    <th>İsmi</th>
+                    <th>Açıklama</th>
+                    <th>Örnek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>feat:</td>
+                    <td>Yeni eklenen özellikler için kullanılır. Altına ise açıklama yapılabilir.</td>
+                    <td>feat: Bilim insanlarının Sözlerini Ekleme Özelliği Eklendi</td>
+                </tr>
+                <tr>
+                    <td>fix:</td>
+                    <td>Düzeltilen bir hata için kullanılır. Altına açıklaması yazılabilir</td>
+                    <td>fix: CSS Görünümü Yenilendi</td>
+                </tr>
+                <tr>
+                    <td>docs:</td>
+                    <td>Kaynakça olarak kullanılan bağlantılar eklenebilir.</td>
+                    <td>docs: https://data35delete.github.io/Data-s-Book-on-Git/</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Git Log</h2>
+        <pre id="preh2">Geçmişi görmek için kullanılan bir komuttur.</pre>
+
+        <pre id="preh2">Direkt kullanımı size tüm Commit'lerde yapılan değişiklikleri tek tek detalı bir biçimde konsola yazdırıcaktır. Kullanmak için ise <code>git log</code> ile kullanılır.</pre>
+
+        <pre id="codeh2">Deneme amaçlı olarak tesk klasörümüzde;
+
+<code class="language-bash">git log</code>
+
+Komutunu çalıştıralım ve çıktıyı gözlemleyelim.</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/12.png" alt="4.12" width="80%">
+        </div>
+
+        <pre id="codeh2">Özetini istersekde "--oneline" parametresini kullanabiliriz.
+
+<code class="language-bash">git log --oneline</code>
+
+Çıktı;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/13.png" alt="4.13" width="80%">
+        </div>
+
+        <pre id="codeh2">Dal şekilde istersekde "--graph" parametresini ekliyebiliriz.
+
+<code class="language-bash">git log --graph</code>
+
+Çıktı ise;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/14.png" alt="4.14" width="80%">
+        </div>
+
+        <pre id="codeh2">"-p" parametresi değişiklikleri görmemizi sağlarken, "--stat" ise tam teşekkürlü bir istatislik sunar bizlere.</pre>
+
+        <h2>Git Diff</h2>
+        <pre id="preh2">Dosyalarda yapılan değişiklikleri gösteren bir komuttur.</pre>
+
+        <pre id="codeh2">Deneme alanımıza dönelim, main.c dosyasını içeriğini şu şekilde değiştirelim;
+
+<code class="language-c">#include &lt;stdio.h>
+
+int main(){
+    printf("Hello Git");
+
+    return 0;
+}</code>
+
+main.cpp dosyasını ise;
+
+<code class="language-cpp">#include &lt;iostream>
+
+using namespace std;
+
+int main(){
+    cout << "Hello Git" << endl;
+
+    return 0;
+}
+</code>
+
+ardından
+
+<code class="language-bash">git add .
+
+git diff --staged # Add ile alınan dosyalarda hangi değişiklikler yapıldığını gözlemleyelim
+
+git commit -m "Kodlar eklendi"
+</code>
+
+Çıktısı ise;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/15.png" alt="4.15" width="80%">
+        </div>
+
+        <h2>Git Show</h2>
+        <pre id="preh2">Show komutu ise yapılan tüm değişiklikleri görüntüleyen bir komuttur.</pre>,
+
+        <pre id="codeh2"><code class="language-bash">git show</code>
+        
+Çıktısı;</pre>
+
+        <div id="divh2Img">
+            <img src="../Bibliography/4 Git Temel İş Akışları.html/16.png" alt="4.16" width="80%">
+        </div>
+
+        <h2>Kaynakça</h2>
+        <ul>
+            <li><a href="https://dev.to/wallacefreitas/best-practices-to-make-a-good-commit-writing-clean-effective-commit-messages-5eg9">https://dev.to/wallacefreitas/best-practices-to-make-a-good-commit-writing-clean-effective-commit-messages-5eg9</a></li>
+            <li><a href="https://www.conventionalcommits.org/tr/v1.0.0/">https://www.conventionalcommits.org/tr/v1.0.0/</a></li>
+        </ul>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <footer style="position: fixed; left: 0; bottom: 0; width: 100%; background: transparent; text-align: center; padding: 10px 0; z-index: 100;">
+        <div>
+            <a href="./3 Git Giriş.html" style="margin-right: 20px; cursor:pointer;">
+                &larr; Önceki
+            </a>
+            <a href="" style="cursor:pointer;">
+                Sonraki &rarr;
+            </a>
+        </div>
+        <div>
+            <p>&copy; 2026 Data's Book</p>
+        </div>
+
+        <div style="position: absolute; right: 20px; bottom: 20px;">
+            <a href="./1 Git İçindekiler.html" style="text-decoration: none;">
+                İçindekiler
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
+
+<!-- Muhammet Enes nam-ı diğer Data Delete tarafından sevgi ile yapıldı <3 -->
