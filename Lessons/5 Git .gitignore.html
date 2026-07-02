@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data's Book on Git</title>
+
+    <link rel="icon" type="image/x-icon" href="../Sources/favicon.png">
+
+    <script src="../Sources/JS/setBackgroundMedia.js"></script>
+
+    <link rel="stylesheet" href="../Sources/JS/hljs/vs2015.css">
+    <script src="../Sources/JS/hljs/highlight.min.js"></script>
+    <script>
+        window.onload = function() {
+            hljs.highlightAll();
+        };
+    </script>
+
+    <link rel="stylesheet" href="../Sources/CSS/main.css">
+</head>
+<body>
+    <h1>.gitignore</h1>
+
+    <div style="height: 100px;"></div>
+    
+    <div id="mainDiv">
+        <h2>.gitignore Nedir?</h2>
+        <pre id="preh2">.gitignore, Github repolarında Git'in içerisine eklenemsini istemediğimiz dosyaları veya klasörleri belirttiğimiz bir talimat dosya formatıdır. Git, ekleme işlemini yaparken repo klasöründe bir .gitignore dosyası aramaktadır. Bu dosyayı okur ve yazılmış olan, dahil edilmesini istemediğimiz dosyaları algılar ve repoya o dosyaları dahil etmez.</pre>
+
+        <pre id="preh2">.gitignore dosyasını genellikle derlenmiş dosyaları, indirilen kütüphaneleri, test sonuçlarını gibi dosyaları boş yere repoda yer kaplamasın amacıyla Git'e talimat vermek amacıyala yazdığımız bir dosya olarak kullanırız.</pre>
+
+        <h2>Sözdizimi</h2>
+        <pre id="preh2">.gitignore dosyasını kullanmak için bir dil veya özel bir format öğrenmeye gerek yoktur. Düz metin olarak istemediğimiz dosyaları veya klasörleri yazarız, kayıt ederiz ve Git eklerken .gitignore içerisindeki belirtilen dosyaları reponun içerisine eklemez.</pre>
+
+        <pre id="codeh2">Şimdi, testler için kullandığımız repoya bir .gitignore dosyası ekliyelim. Ardından "builds" adlı bir klasör, içerisine ise "a.out" ve "a.exe" ekliyelim. Ardından ana repo klasörümüze ise "a.exe", "b.exe" ve "c.out" dosyalarını oluşturalım. İşlemleri hızlı bir şekilde gerçekleştirmek için aşağıdaki Bash komutlarını, Git Bash konsolunda çalıştıralım;
+
+<code class="language-bash">touch .gitignore
+
+mkdir builds
+cd builds
+touch a.out
+touch a.exe
+
+cd ..
+
+touch a.exe
+touch b.exe
+touch c.out
+
+git status -s</code>
+
+Bu Bash komutu yazdıklarımı hızlıca uygulacaktır.
+
+Ardından .gitignore dosyamızın içeriğini aşağıdaki talimatlar ile değiştirelim;
+
+<code>builds/
+
+*.exe
+
+c.out</code>
+
+Bu talimatlar sırayla; Bir dosyayı yok sayma, belirli uzantıya sahip dosyaları yok sayma ve belirli bir dosyayı yok sayma olarak kullanılır.
+
+Şimdi ise bu dosyaları yok saymak için ilk önce .gitignore'u ekliyelim ve Commit atalım. Ardından kontrol edelim bakalım yukarıdaki çıktı gibi Untracked gözükücekleri mi?
+
+<code>git add .gitignore
+
+git commit -m "feat: .gitignore eklendi"
+
+git status -s</code>
+
+Çıktıda hiç bir dosyanın yazıldığını görmeyebilirsiniz. Çünkü Git Add tanımlanan dosyaları yok saydı ve hiç Staged kısmına hiç bir zaman geçirmicek. Eğer yine dosyalar gözüküyor ise tekrar baştan denemenizi tavsiye eder. Temizlemek için;
+
+<code class="language-bash">git rm -r --cached .</code>
+
+Bu komut mevcut eklenen her veriyi temizler ve Untracked haline getirir.</pre>
+
+        <h3>.gitignore ile Dosyaları Tekrar Dahil Etme</h3>
+        <pre id="preh3">Bir çok .gitignore ile yok sayılmasını istediğimiz dosyaları yazdığımız dosyaları oluşturabiliriz. .gitignore hangi klasör altındaysa o klasörü ilgilendiren yok sayılması gereken dosyalar yazılır. Fakat bazen bir .gitignore'da yok sayılan kısımda bir dosyayı veya klasörü yok sayılmamamsını istiyebiliriz.</pre>
+
+        <pre id="preh3">İşte bu durumlar için kullanılan bir araç var. Negasyon! Negasyon, ünlem işareti(!) ile yok sayılan dosyaları tekrar dahil eden bir araçtır. İstenilen dosya isminin başına "!" koyularak Negason yapılmış olur.</pre>
+
+        <h2>Yaygın .gitignore Dosyaları</h2>
+        <pre id="preh2">Bir repoda kodlama yaparken tabikide builds, kütüphane ve API Key dosyalarını repomuza herkese açık hale getirmek istemeyiz. Bu sebeble dillerin .gitignore dosyaları vardır. Her dilde kendine has olduğu için de dile göre .gitignore dosyaları vardır. <a href="https://www.toptal.com/developers/gitignore/">gitignore.io</a> sitesinden aldığım birkaç dile özel .gitignore dosyalarını aşağı kısma bıraktım. Daha fazlası için siteyi ziyaret edebilirsiniz(Sponsor değildir!).</pre>
+
+        <pre id="codeh2">C
+<code>### C ###
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf</code>
+
+C++
+<code>### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app</code>
+
+Python
+<code>### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+### Python Patch ###
+# Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
+poetry.toml
+
+# ruff
+.ruff_cache/
+
+# LSP config files
+pyrightconfig.json</code>
+
+Node.js
+<code>### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for instrumented libs generated by jscoverage/JSCover
+lib-cov
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+# Comment in the public line in if your project uses Gatsby and not Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+
+# vuepress build output
+.vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+
+# Docusaurus cache and generated files
+.docusaurus
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+### Node Patch ###
+# Serverless Webpack directories
+.webpack/
+
+# Optional stylelint cache
+
+# SvelteKit build / generate output
+.svelte-kit</code>
+
+Java
+<code>### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*</code>
+</pre>
+
+        <h2>Global .gitignore</h2>
+        <pre id="preh2">Peki sürekli dahil olmasını istemdiğimiz dosyaları sürekli .gitignore dosyasına eklemek zorundayımız? Tabiki hayır! Linus Torvalds bu sorun için .gitignore_global adlı bir dosya oluşturmamızı sağlayan bir Config komutu getirdi.</pre>
+
+        <pre id="codeh2">Hadi bizde bir tane tanımlayalım. Şimdi IDE'lerin sevmediğim bir tarafına proje klasörümün içerisine kendi ayarlarnın barındırkları ".vscode" veya ".idea" klasörledir. Şimdi bu iki klasörün içeriğini ve kendisini tüm repolarıma dahil etmemek için bir .gitignore_global dosyası oluşturalım. İlk olarak bu dosyayı oluşturmamız ve Vim ile içeriğini yazmamız gerek;
+
+<code class="language-bash">touch ~/.gitignore_global # Mevzu bahis dosyayı oluşturur
+
+vim ~/.gitignore_global # Vim ile içine girdik</code>
+
+Vim'de iken "A" basalım ve Insert moda geçelim. Daha sonra dosyanın içeriğini yazalım;
+
+<code>.vscode/
+.idea/</code>
+
+Sonra ESC, gelen alt kısma ":wq" diyerek dosyayı kayıt edip çıkış yapalım.
+
+Daha sonra bu oluşturduğumuz dosyayı Git'e tanıtalım.
+
+<code class="language-bash">git config --global core.excludesfile ~/.gitignore_global # Git'e ekliyelim
+
+git config --global core.excludesfile # Dosyamızın yolu gözükür ise başarılı olmuş demektir</code>
+
+Artık istenmeyen dosyalar ve klasörler değerli repolamızda barınamıcak...</pre>
+
+        <h2>Kaynakça</h2>
+        <ul>
+            <li><a href="https://git-scm.com/docs/gitignore">https://git-scm.com/docs/gitignore</a></li>
+            <li><a href="https://www.toptal.com/developers/gitignore/">https://www.toptal.com/developers/gitignore/</a></li>
+            <li><a href="https://dev.to/maiobarbero/how-to-set-up-a-global-gitignore-4e09">https://dev.to/maiobarbero/how-to-set-up-a-global-gitignore-4e09</a></li>
+        </ul>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <footer style="position: fixed; left: 0; bottom: 0; width: 100%; background: transparent; text-align: center; padding: 10px 0; z-index: 100;">
+        <div>
+            <a href="./4 Git Temel İş Akışları.html" style="margin-right: 20px; cursor:pointer;">
+                &larr; Önceki
+            </a>
+            <a href="" style="cursor:pointer;">
+                Sonraki &rarr;
+            </a>
+        </div>
+        <div>
+            <p>&copy; 2026 Data's Book</p>
+        </div>
+
+        <div style="position: absolute; right: 20px; bottom: 20px;">
+            <a href="./1 Git İçindekiler.html" style="text-decoration: none;">
+                İçindekiler
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
+
+<!-- Muhammet Enes nam-ı diğer Data Delete tarafından sevgi ile yapıldı <3 -->

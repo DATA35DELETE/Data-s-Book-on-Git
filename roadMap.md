@@ -69,11 +69,8 @@
   - **Klasör Yoksayma**: `klasor/`. Örnek.
   - **Uzantı Yoksayma**: `*.log`. Örnek.
   - **Negasyon**: `!önemli.log`. Örnek.
-  - **Yorum Satırı**: `#`. Örnek.
 - **Yaygın .gitignore Şablonları**: C/C++. Python. Node.js. Java. Tablo Halinde.
-- **Zaten Takip Edilen Dosyaları Yoksaymak**: `git rm --cached`. Örnek.
 - **Global .gitignore**: `~/.gitignore_global`. Tanım. Kurulum. Örnek.
-- **gitignore.io**: Tanım. Otomatik Şablon Üretme. Örnek.
  
 ---
  
