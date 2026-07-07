@@ -25,20 +25,120 @@
     <div style="height: 100px;"></div>
     
     <div id="mainDiv">
-        <h2>Branch</h2>
-        <pre id="preh2">Branch Türkeçisyle dal; bir reponun kaynak kodlarını alıp, daha farklı ama repodaki projenin temasına uygun olacak şekilde fakat farklılıkları olan kısımlara denir.</pre>
+        <h2>Branch Nedir?</h2>
+        <pre id="preh2">Branch, bir repodaki porjenin farklı varyasyonlarını depolayabilceğimiz ve yönetebilceğimiz repo kısımlarına denir.</pre>
 
-        <pre id="preh2">Yani bir proje var, siz o kadar onu geliştiriyosunuz ki ne orjinal repoya atabiliriniz nede kendi reponuza koyabilirsiniz(Lisansdan dolayı). Bunun için aynı repo içerisine Branch denilen bir yer açarsınız kendinize özel, o kısma geliştirdiğiniz orjinal projeyi o kısma koyarsınız.</pre>
+        <pre id="preh2">Branch Türkçe anlamıyla dal bizim için bir nevi projenin farklı varyasyonlarını farklı repo açmadan aynı repo içerisinde depolayabilceğimiz ve yöneteceğimiz kısımlardır. Örnek olarak bu dökümantasyonun mobil uygulama versiyonu projesini bu dökümantasyonun farklı bir Branch'a koyulabilir veya bir uygulamanın farklı mimariler için farklı Branch'lar kullanmasıda Branch kullanıma örnektir. Görsellik bakımında aşağıdaki örneğe göz atalım</pre>
 
-        <pre id="preh2">Benzetmek açısından Debain ve Ubuntu dağıtımlarını örnek verebiliriz. Ubuntu'nun temelinde Debain 'nin kodlarını içerir fakat Conanical o kadar fazla geliştirmiş ki farklı bir işletim sistemi olmuş. Tabi gerçekten Ubuntu Debain'nin Branch'ı değil fakat örnek olarak verilebilir.</pre>
-
-        <pre id="preh2">Daha iyi kavramak için bir Branch resmi aşağıda verilmiştir.</pre>
 
         <div id="divh2Img">
             <img src="../Bibliography/6 Git Branch.html/1.svg" alt="6.1" width="80%">
         </div>
 
+        <h3>HEAD</h3>
+        <pre id="preh3">HEAD, mevcut Branch'ı ifade eden ve ".git" klasöründe bulunna bir dosyadır. Hem bize hemde Git'e hangi Branch'a olduğumuzu söyler.</pre>
+
+        <pre id="codeh3"><code class="language-bash">cat .git/HEAD</code>
         
+Komutu ile neler yazdığını görebiliriz.
+
+Çıktı;</pre>
+
+            <div id="divh2Img">
+                <img src="../Bibliography/6 Git Branch.html/2.png" alt="6.2" width="80%">
+            </div>
+
+            <h3>Master &rarr; Main</h3>
+            <pre id="preh3">Daha önceden bahsettiğimiz gibi eskiden ana Branch dolayısıyla tüm ana kodlar "master" adlı bir Branch üzerinden yapılırdı. Fakat zamanla alışkanlıklar değişti daha kapsayıcı olan "main" ismine geçildi. Çünkü 2020 yılındaki genel olarak farkındalık kazanan insanlar Git ve Github sisteminde rahatsız edici buldukları için... Branch sistemi yurt dışında o zamanlarda "Master Slave ilişkisi" üzerinden anlatılırdı. Master-Slave Türkçesiyle sahip-köle, bu iki kavram insanları rahat edici gelmeye başlamıştı. Bu durumda Git ve Github Master'dan Main'e geçiş yaptılar. Böylelikle üzerlerindeki kültürel baskı ortadan kalkmış oldu...</pre>
+
+            <h2>Git Branch</h2>
+            <pre id="preh2">Bu komut Branch işlemlerini gerçekleştirmek için kullanılan Git komutudur.</pre>
+
+            <h3>Listeleme</h3>
+            <pre id="codeh3">Branch'ları listemek için;
+
+<code class="language-bash">git branch</code>
+
+Komutu kullanılır.
+
+Tüm Branch'ları görüntülemek için ise;
+
+<code class="language-bash">git branch -a</code>
+
+Komutu kullanılır.</pre>
+
+            <h3>Oluşturma</h3>
+            <pre id="codeh3">Branch oluşturmak için;
+
+<code class="language-bash">git branch branchIsminiz</code>
+            
+Şeklinde oluşturulur.
+
+Kontrol etmek için listeleme yapalım;
+
+<code class="language-bash">git branch -a</code></pre>
+
+            <h3>Branch'ı Yeniden Adlandırma</h3>
+            <pre id="codeh3">Yeniden adlandırmak için;
+
+<code class="language-bash">git branch -m eskiBranchIsmi yeniBranchIsmi</code></pre>
+
+            <h3>Branch Silme</h3>
+            <pre id="codeh3">Branch silmek istersekde;
+
+<code class="language-bash">git branch -d branchIsminiz</code>
+
+
+Zorla silmek istersek;
+<code class="language-bash">git branch -D branchIsminiz</code>
+
+Şeklinde kullanılır.</pre>
+
+            <h2>Git Switch</h2>
+            <pre id="preh2">Git Switch, Branch'lar arasında geçiş yapmamızı sağlayan bir komuttur.</pre>
+
+            <h3>Branch'a Geçiş</h3>
+            <pre id="codeh3">Branch arası geçiş yapmak için;
+
+<code class="language-bash">git switch branchIsminiz</code></pre>
+
+            <h3>Oluşturup Geçme</h3>
+            <pre id="codeh3">Eğer Branch yoksa ve direkt oluşturup geçmek istersek;
+
+<code class="language-bash">git switch -c branchIsminiz</code></pre>
+
+            <h2>Branch Stratejileri</h2>
+            <pre id="preh2">Branch'ı kullanmak esasen bir strateji üzerine kurulur. Projemizin ekibimizin büyüklüğü ile direkt ilgili olan bu stratejileri bir gözlemleyelim.</pre>
+
+            <h3>GitHub Flow</h3>
+            <pre id="preh3">En basit ve küçük ekipler için uygun olan strateji olan Github Flow, iki adet Branch gerektirir. Main ve Feature Branch'larını ister</pre>
+
+            <pre id="preh3">Main Branch'ın amacı projenin ana kaynak kodlarının barındırmasıdır.</pre>
+
+            <pre id="preh3">Feature Branch'ı ise yeni özelliklerin, düzeltmelerin ve denemelerin yapıldığı bir nevi deneme tahtası işlevi gören kısımdır. Feature'daki proje yayımlanmaya uygun olduğunda Main'e ya Merge ya da dosyaların üzerlerine yazma işlemi ile Main'e yazılır ve ana proje olmaya başlar.</pre>
+
+            <h3>Git Flow</h3>
+            <pre id="preh3">Bu strateji ise kapsamlı projeler ve büyük ekipler için uygundur. Kullanılan Branch'ları ve işlevlerini görelim;</pre>
+
+            <pre id="preh3">Main, genel sürüm yükseltmelerde güncellenen Branch'tır.</pre>
+
+            <pre id="preh3">Develop, bu Branch'ta tüm geliştirme süreci gerçekleşir. Tüm özellikler ve düzeltmeler işlemlerin sonucunda Develop Branch'ı ile birleştirilir.</pre>
+
+            <pre id="preh3">Feature, Develop Branch'ı için özellik denemeleri bu Branch'ta gerçekleşir.</pre>
+
+            <pre id="preh3">Release, genel ve ara yükseltmelerde güncellenen yegana tüm sürümlerin bulunduğu Branch'tır. Main'den farkı ise; Main'e giden veriler "0v, 1v, 2v" gibi sürüm numaraları giderken, Release ise "0.1v, 1.1.4v" gibi sürümler gider. Yani Main genel olarak Feature her yükseltmede güncelleme alır.</pre>
+
+            <pre id="preh3">Hotfix, Develop Branch'ındaki acil hata düzeltmeleri için bu Branch kullanılır.</pre>
+
+            <h3>Trunk Based Development(Ana Hat Tabanlı Geliştirme)</h3>
+            <pre id="preh3">Bu kısımda stratejide ise özel amacı olan herhangi bir Branch açılmaz. "Main ve açılan Branch'lar ne olursa olur her zaman yayımlanmaya müsait olduğu sürece repo her zaman iyidir" şeklinde strateji ile yola çıkılır.</pre>
+
+            <h2>Kaynakça</h2>
+            <ul>
+                <li><a href="https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main">https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main</a></li>
+                <li><a href="https://medium.com/@cerengenc17/git-branch-stratejileri-part-1-fd30c608936a">https://medium.com/@cerengenc17/git-branch-stratejileri-part-1-fd30c608936a</a></li>
+                <li><a href="https://www.geeksforgeeks.org/git/branching-strategies-in-git/">https://www.geeksforgeeks.org/git/branching-strategies-in-git/</a></li>
+            </ul>
     </div>
 
     <div style="height: 100px;"></div>
